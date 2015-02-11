@@ -12,16 +12,26 @@ var Question = function (question, answers) {
 // ========================================	
 
 Question.prototype.render = function() {
+
+	/* create question div to be rendered */
 	var currentQuestion = $('<div>')
+
+	/* append questions and answers */
 		.append(
 			Question.answers.map(function(answer) {
+				/* create div for answers */
 				var a = $('<div>');
+
+				/* add class to the correct answer */
 				if(answer.isAnswer) {
 					a.addClass('correct');
 				}
 				return a;
 			})
 		);
+
+		/* check for correct answer and update score */
+		currentQuestion.isCorrect();
 };
 
 
@@ -32,24 +42,40 @@ Question.prototype.render = function() {
 
 Question.prototype.isCorrect = function() {
 	$('<div>').on('click', function() {
+
+		/* counter variable for total score */
 		var totalScore = 0;
 		if(this.answer.hasClass('correct')) {
 			totalScore += 1;
 		} 
 		return totalScore;
 	});
+
 };
 
 
 // ========================================
-// CLEARS OUT DIV AND REPLACES WITH NEXT
-// QUESTION
+// GETS THE NEXT QUESTION OUT OF THE ARRAY
 // ========================================	
 
-Question.prototype.removeReplaceQuestion = function() {
-	
+Question.prototype.newQuestion = function(question) {
+
+	/* get the current question from the array */
+	var nextQuestion = unansweredQuestion.splice([0], 1);
+
+	/* render it to the DOM */
+	nextQuestion.render();
 };
 
+
+// ========================================
+// REMOVES CURRENT QUESTION AND PUTS IT INTO
+// THE ANSWERED QUESTION ARRAY
+// ========================================	
+
+Question.prototype.removeQuestion = function() {
+	answeredQuestion.push(nextQuestion);
+};
 
 // ========================================
 // ARRAYS TO MOVE UNANSWERED AND ANSWERED
@@ -244,5 +270,11 @@ unansweredQuestions.push(underscoreQuestion3);
 
 
 $(document).on('ready', function() {
+	$('body').append(newQuestion)
   
 });
+
+
+
+
+
