@@ -13,7 +13,7 @@ var TriviaQuestions = [
     ]
     },
     {
-    question : "Which HTML tag is not a valid HTML element?",
+    question : "Which HTML element is not a valid tag?",
     answers  : [
         {text    : "html", isAnswer : false},
         {text    : "d", isAnswer : true},
@@ -155,8 +155,8 @@ var getQuestion = function (index) {
     //grabbing the question at the current index in the array
     $(".question").html(TriviaQuestions[index].question);
 
-    //loops through the array and appends the answers in buttons and assigns it's index
-    //value to uniquely identify it later
+    //loops through the array and appends the answers in buttons and assigns a unique #id of
+    //it's index value to identify it later
     for (var i = 0; i < TriviaQuestions[index].answers.length; i++) {
         $(".answers").append('<button id="' + index + '-' + i + '" class="btn btn-primary btn-lg answer">' + (TriviaQuestions[index].answers[i].text) + '</button>');
     }
@@ -171,18 +171,18 @@ var getQuestion = function (index) {
 //          CLICK EVENT HANDLERS
 // ========================================
 
-//click event handler which takes in a parameter
+//click event handler for the selected answer and checks to see if it is the correct answer
 $(".answers").on("click", function (e) {
 
-    //assign variables to the Number value in e's id value and split to grab each index
+    //assign variables to the Number value in e's #id value and split to grab each index
     var questionIndex = Number(e.target.id.split('-')[0]);
     var answerIndex = Number(e.target.id.split('-')[1]);
 
     //check to see if e has an id and then procede to the next condition
     if (e.target.id != "") {
 
-        //if the button that was clicked has a value of isAnswer then CORRECT!,
-        //otherwise WRONG!
+        //if the button that was clicked has a value of isAnswer = true then CORRECT!,
+        //otherwise WRONG!  inline styles for specificity
         if (TriviaQuestions[questionIndex].answers[answerIndex].isAnswer) {
             $(".message").html("<h1 style='color: green; font-weight: bold; text-align: center;'>CORRECT!</h1>");
         } else {
@@ -202,7 +202,7 @@ $(".nextquestion").on("click", function (e) {
     //increments the index of the question
     var indexCounter = Number(e.target.id) + 1;
 
-    //checks to see if there are any more questions left to answer, if not then the end
+    //checks to see if there are any more questions left to answer, if not then the end.
     //otherwise get the next question
     if (indexCounter >= TriviaQuestions.length) {
         $(".message").html("<h1 style='font-weight: bold; text-align: center;'>No more questions!</h1>");
